@@ -19,11 +19,5 @@ export function ThumbnailSlider({ pages }: { pages: Array<PageProps> }) {
         horizontal={true}
       />
     </View>
-
-    // <View style={{ flexDirection: "row" }}>
-    //   {pages.map((page) => (
-    //     <PageThumbnail page={page}></PageThumbnail>
-    //   ))}
-    // </View>
   );
 }

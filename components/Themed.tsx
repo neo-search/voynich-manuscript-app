@@ -4,7 +4,11 @@
  */
 
 import * as React from "react";
-import { Text as DefaultText, View as DefaultView } from "react-native";
+import {
+  Text as DefaultText,
+  View as DefaultView,
+  SafeAreaView as DefaultSafeAreaView,
+} from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -30,6 +34,7 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
+export type SafeAreaViewProps = ThemeProps & DefaultSafeAreaView["props"];
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
@@ -56,4 +61,20 @@ export function View(props: ViewProps) {
   );
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+}
+
+export function SafeAreaView(props: SafeAreaViewProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background"
+  );
+
+  return (
+    <DefaultSafeAreaView style={[{ backgroundColor }, style]} {...otherProps} />
+  );
+}
+
+export function ViewWithBorder(props: ViewProps) {
+  return <View {...props} style={[props.style, { marginHorizontal: 8 }]} />;
 }

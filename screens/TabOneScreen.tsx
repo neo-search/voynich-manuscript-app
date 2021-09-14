@@ -1,7 +1,7 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet } from "react-native";
 import { Image } from "react-native-elements";
-import { Text, View } from "../components/Themed";
+import { Text, View, ViewWithBorder, SafeAreaView } from "../components/Themed";
 import { DocumentService } from "../services/DocumentService";
 import { ThumbnailSlider } from "../components/ThumbnailSlider";
 
@@ -14,28 +14,29 @@ export default function TabOneScreen() {
   const pages = documentService.document().pages;
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Read Voynich manuscript</Text>
+      <ViewWithBorder>
+        <Text style={styles.title}>Read Voynich manuscript</Text>
+      </ViewWithBorder>
       <ThumbnailSlider pages={pages}></ThumbnailSlider>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Text style={styles.title}>Browse throw all pages</Text>
-      <Image
-        style={{ width: 100, height: 100 }}
-        source={{ uri: IMAGE_URI }}
-      ></Image>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Text style={styles.title}>Show folding</Text>
-      <Image
-        style={{ width: 100, height: 100 }}
-        source={{ uri: IMAGE_URI }}
-      ></Image>
+      <ViewWithBorder>
+        <View
+          style={styles.separator}
+          lightColor="#eee"
+          darkColor="rgba(255,255,255,0.1)"
+        />
+        <Text style={styles.title}>Browse throw all pages</Text>
+      </ViewWithBorder>
+      <ThumbnailSlider pages={pages}></ThumbnailSlider>
+
+      <ViewWithBorder>
+        <View
+          style={styles.separator}
+          lightColor="#eee"
+          darkColor="rgba(255,255,255,0.1)"
+        />
+        <Text style={styles.title}>Show folding</Text>
+      </ViewWithBorder>
+      <ThumbnailSlider pages={pages}></ThumbnailSlider>
 
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </SafeAreaView>
