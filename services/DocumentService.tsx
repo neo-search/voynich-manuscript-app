@@ -5,9 +5,15 @@ export class DocumentService {
   constructor() {}
 
   document() {
+    const pages = [];
+    for (let i = 0; i < 100; i++) {
+      pages[i] = this.page(i);
+    }
+
     return {
       title: "Voynich manuscript",
       amountOfPages: 122,
+      pages,
       stats: {
         amountOfChars: 22120,
         amountOfWords: 2212,
@@ -21,8 +27,8 @@ export class DocumentService {
     return {
       imageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
       quireImageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
-      pageTitle: "f20v",
-      pagePosition: "Folie 20, rechte Seite (F20 V)",
+      pageTitle: "f" + (index + 1) + "v",
+      pagePosition: "Folie " + index + ", rechte Seite (F20 V)",
       quire: 3,
       chapter: "Pflanzen",
       transliteration: `DSFDA DSFASD DFASFA DF

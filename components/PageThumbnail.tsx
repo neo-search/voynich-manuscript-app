@@ -7,7 +7,11 @@ import { View, Text } from "react-native";
 
 export function PageThumbnail({ page }: { page: PageProps }) {
   return (
-    <View style={{ flexDirection: "column", margin: 8 }}>
+    <View
+      style={{
+        margin: 8,
+      }}
+    >
       <View
         style={{
           shadowColor: "#524934",
@@ -17,7 +21,7 @@ export function PageThumbnail({ page }: { page: PageProps }) {
         }}
       >
         <Image
-          style={{ width: 90, height: 120 }}
+          style={{ width: 100, height: 120 }}
           source={{ uri: page.imageUrl }}
         ></Image>
       </View>
