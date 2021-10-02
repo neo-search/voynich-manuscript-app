@@ -15,6 +15,7 @@ export default function PageViewerScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageZoom
+        useNativeDriver={true}
         cropWidth={Dimensions.get("window").width}
         cropHeight={Dimensions.get("window").height}
         imageWidth={Dimensions.get("window").width}

@@ -12,11 +12,18 @@ export function ThumbnailSlider({ pages }: { pages: Array<PageProps> }) {
     <View>
       <FlatList<PageProps>
         style={{ margin: 0, padding: 0 }}
-        pagingEnabled={true}
+        pagingEnabled={false}
         data={pages}
         renderItem={renderItem}
         keyExtractor={(item) => item.pagePosition}
         horizontal={true}
+        decelerationRate={"normal"}
+        // disableIntervalMomentum={true}
+        getItemLayout={(data, index) => ({
+          length: 100,
+          offset: 100 * index,
+          index,
+        })}
       />
     </View>
   );
