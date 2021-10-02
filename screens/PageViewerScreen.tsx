@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, ScrollView, View, Text } from "react-native";
 import { Image } from "react-native-elements";
 import ImageZoom from "react-native-image-pan-zoom";
 import { SafeAreaView } from "../components/Themed";
@@ -14,23 +14,33 @@ export default function PageViewerScreen() {
   const pages = documentService.document().pages;
   return (
     <SafeAreaView style={styles.container}>
-      <ImageZoom
-        useNativeDriver={true}
-        cropWidth={Dimensions.get("window").width}
-        cropHeight={Dimensions.get("window").height}
-        imageWidth={Dimensions.get("window").width}
-        imageHeight={Dimensions.get("window").height}
-      >
-        <Image
-          source={{
-            uri: "https://ia902608.us.archive.org/BookReader/BookReaderImages.php?zip=/18/items/TheVoynichManuscript/Voynich_Manuscript_jp2.zip&file=Voynich_Manuscript_jp2/Voynich_Manuscript_0011.jp2&id=TheVoynichManuscript&scale=2&rotate=0",
-          }}
-          style={{
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
-          }}
-        ></Image>
-      </ImageZoom>
+      <ScrollView>
+        <ImageZoom
+          useNativeDriver={true}
+          cropWidth={Dimensions.get("window").width}
+          cropHeight={Dimensions.get("window").height}
+          imageWidth={Dimensions.get("window").width}
+          imageHeight={Dimensions.get("window").height}
+        >
+          <Image
+            source={{
+              uri: "https://ia902608.us.archive.org/BookReader/BookReaderImages.php?zip=/18/items/TheVoynichManuscript/Voynich_Manuscript_jp2.zip&file=Voynich_Manuscript_jp2/Voynich_Manuscript_0011.jp2&id=TheVoynichManuscript&scale=2&rotate=0",
+            }}
+            style={{
+              width: Dimensions.get("window").width,
+              height: Dimensions.get("window").height,
+            }}
+          ></Image>
+        </ImageZoom>
+        <View style={{ backgroundColor: "white" }}>
+          <Text style={{fontSize:20, fontWeight:"bold"}}>f20v</Text>
+          <Text style={{fontSize:16}}>Transliterations</Text>
+
+          <Text>DSGA DSFAGS ES DFA AADS SADG GPHS ADADO SDFAOD DAFAO</Text> 
+          <Text>B</Text>
+          <Text>C</Text>
+        </View>
+      </ScrollView>
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </SafeAreaView>
   );
