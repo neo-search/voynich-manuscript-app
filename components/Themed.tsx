@@ -75,6 +75,6 @@ export function SafeAreaView(props: SafeAreaViewProps) {
   );
 }
 
-export function ViewWithBorder(props: ViewProps) {
+export function ViewWithMargin(props: ViewProps) {
   return <View {...props} style={[props.style, { marginHorizontal: 8 }]} />;
 }

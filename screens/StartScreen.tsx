@@ -1,7 +1,7 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { Image } from "react-native-elements";
-import { Text, View, ViewWithBorder, SafeAreaView } from "../components/Themed";
+import { Text, View, ViewWithMargin, SafeAreaView } from "../components/Themed";
 import { DocumentService } from "../services/DocumentService";
 import { ThumbnailSlider } from "../components/ThumbnailSlider";
 // import { Props } from "../types";
@@ -14,35 +14,36 @@ export default function StartScreen({ navigation }: any) {
   const pages = documentService.document().pages;
   return (
     <SafeAreaView style={styles.container}>
-      <ViewWithBorder>
-        <Text
-          onPress={() => navigation.navigate("PageViewerScreen")}
-          style={styles.title}
-        >
-          Read Voynich manuscript
-        </Text>
-      </ViewWithBorder>
-      <ThumbnailSlider pages={pages}></ThumbnailSlider>
-      <ViewWithBorder>
-        <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
-        />
-        <Text style={styles.title}>Browse throw all pages</Text>
-      </ViewWithBorder>
-      <ThumbnailSlider pages={pages}></ThumbnailSlider>
+      <ScrollView>
+        <ViewWithMargin>
+          <Text
+            onPress={() => navigation.navigate("PageViewerScreen")}
+            style={styles.title}
+          >
+            Read Voynich manuscript
+          </Text>
+        </ViewWithMargin>
+        <ThumbnailSlider pages={pages}></ThumbnailSlider>
+        <ViewWithMargin>
+          <View
+            style={styles.separator}
+            lightColor="#eee"
+            darkColor="rgba(255,255,255,0.1)"
+          />
+          <Text style={styles.title}>Browse throw all pages</Text>
+        </ViewWithMargin>
+        <ThumbnailSlider pages={pages}></ThumbnailSlider>
 
-      <ViewWithBorder>
-        <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
-        />
-        <Text style={styles.title}>Show folding</Text>
-      </ViewWithBorder>
-      <ThumbnailSlider pages={pages}></ThumbnailSlider>
-
+        <ViewWithMargin>
+          <View
+            style={styles.separator}
+            lightColor="#eee"
+            darkColor="rgba(255,255,255,0.1)"
+          />
+          <Text style={styles.title}>Show folding</Text>
+        </ViewWithMargin>
+        <ThumbnailSlider pages={pages}></ThumbnailSlider>
+      </ScrollView>
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </SafeAreaView>
   );
