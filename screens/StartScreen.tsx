@@ -17,13 +17,16 @@ export default function StartScreen({ navigation }: any) {
       <ScrollView>
         <ViewWithMargin>
           <Text
-            onPress={() => navigation.navigate("PageViewerScreen")}
+            onPress={() => navigation.navigate("PageViewerScreen", {})}
             style={styles.title}
           >
             Read Voynich manuscript
           </Text>
         </ViewWithMargin>
-        <ThumbnailSlider pages={pages}></ThumbnailSlider>
+        <ThumbnailSlider
+          pages={pages}
+          navigation={navigation}
+        ></ThumbnailSlider>
         <ViewWithMargin>
           <View
             style={styles.separator}
@@ -32,7 +35,10 @@ export default function StartScreen({ navigation }: any) {
           />
           <Text style={styles.title}>Browse throw all pages</Text>
         </ViewWithMargin>
-        <ThumbnailSlider pages={pages}></ThumbnailSlider>
+        <ThumbnailSlider
+          pages={pages}
+          navigation={navigation}
+        ></ThumbnailSlider>
 
         <ViewWithMargin>
           <View
@@ -42,7 +48,7 @@ export default function StartScreen({ navigation }: any) {
           />
           <Text style={styles.title}>Show folding</Text>
         </ViewWithMargin>
-        <ThumbnailSlider pages={pages}></ThumbnailSlider>
+        <ThumbnailSlider pages={pages} navigation={navigation}></ThumbnailSlider>
       </ScrollView>
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
     </SafeAreaView>
