@@ -3,9 +3,17 @@ import * as React from "react";
 import { TextProps, TextLight } from "./Themed";
 import { Image } from "react-native-elements";
 import { PageProps } from "../services/DocumentService";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 
-export function PageThumbnail({ page }: { page: PageProps }) {
+export function PageThumbnail({
+  pages,
+  index,
+  navigation,
+}: {
+  pages: Array<PageProps>;
+  index: number;
+  navigation: any;
+}) {
   return (
     <View
       style={{
@@ -20,12 +28,18 @@ export function PageThumbnail({ page }: { page: PageProps }) {
           shadowRadius: 4,
         }}
       >
-        <Image
-          style={{ width: 100, height: 120 }}
-          source={{ uri: page.imageUrl }}
-        ></Image>
+        <Pressable
+          onPress={() =>
+            navigation.navigate("PageViewerScreen", { pages, index })
+          }
+        >
+          <Image
+            style={{ width: 100, height: 120 }}
+            source={{ uri: pages[index].imageUrl }}
+          ></Image>
+        </Pressable>
       </View>
-      <TextLight style={{ marginTop: 5 }}>{page.pageTitle}</TextLight>
+      <TextLight style={{ marginTop: 5 }}>{pages[index].pageTitle}</TextLight>
     </View>
   );
 }
