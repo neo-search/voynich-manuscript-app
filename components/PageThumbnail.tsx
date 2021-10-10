@@ -17,7 +17,8 @@ export function PageThumbnail({
   return (
     <View
       style={{
-        margin: 8,
+        marginLeft: 12,
+        marginRight: 12,
       }}
     >
       <View
