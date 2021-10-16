@@ -6,6 +6,8 @@ import { DocumentService } from "../services/DocumentService";
 import { ThumbnailSlider } from "../components/ThumbnailSlider";
 import Hero from "../components/Hero";
 import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "react-i18next";
+import "../translations/i18n";
 
 // import { Props } from "../types";
 const IMAGE_URI =
@@ -13,7 +15,7 @@ const IMAGE_URI =
 
 export default function StartScreen({ navigation }: any) {
   const documentService = new DocumentService();
-
+  const { t } = useTranslation();
   const pages = documentService.document().pages;
   return (
     <SafeAreaView style={styles.container}>
@@ -32,7 +34,7 @@ export default function StartScreen({ navigation }: any) {
               onPress={() => navigation.navigate("PageViewerScreen", {})}
               style={styles.title}
             >
-              Read Voynich manuscript
+              {t("read_manuscript")}
             </Text>
           </ViewWithMargin>
           <ThumbnailSlider
@@ -45,7 +47,7 @@ export default function StartScreen({ navigation }: any) {
               lightColor="#eee"
               darkColor="rgba(255,255,255,0.9)"
             />
-            <Text style={styles.title}>Browse throw all pages</Text>
+            <Text style={styles.title}>{t("page_navigation")}</Text>
           </ViewWithMargin>
           <ThumbnailSlider
             pages={pages}
@@ -58,7 +60,7 @@ export default function StartScreen({ navigation }: any) {
               lightColor="#eee"
               darkColor="rgba(255,255,255,0.1)"
             />
-            <Text style={styles.title}>Show folding</Text>
+            <Text style={styles.title}>{t("show_folding")}</Text>
           </ViewWithMargin>
           <ThumbnailSlider
             pages={pages}

@@ -6,6 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import { useTranslation } from "react-i18next";
+import "../translations/i18n";
 
 // const ICON_COLOR = "#B96F58";
 // const ICON_COLOR = "#6D8D68";
@@ -13,6 +15,7 @@ const ICON_COLOR = "white";
 const TEXT_COLOR = "white";
 
 const Hero = () => {
+  const { t } = useTranslation();
   return (
     <View
       style={{
@@ -55,7 +58,7 @@ const Hero = () => {
             // fontStyle: "italic",
           }}
         >
-          History
+          {t("history")}
         </Text>
       </View>
       <View style={{ alignContent: "center", marginLeft: 12, width: 70 }}>
@@ -75,7 +78,7 @@ const Hero = () => {
         />
         {/* <Ionicons name="md-checkmark-circle" size={32} color="green" /> */}
         <Text style={{ color: TEXT_COLOR, textAlign: "center", marginTop: 5 }}>
-          FAQ
+        {t("faq")}
         </Text>
       </View>
       <View style={{ alignContent: "center", marginLeft: 12, width: 70 }}>
@@ -93,7 +96,7 @@ const Hero = () => {
         />
         {/* <Ionicons name="md-checkmark-circle" size={32} color="green" /> */}
         <Text style={{ color: TEXT_COLOR, textAlign: "center", marginTop: 5 }}>
-          reddit Forum
+        {t("reddit_forum")}
         </Text>
       </View>
       <View style={{ alignContent: "center", marginLeft: 12, width: 70 }}>
@@ -117,7 +120,7 @@ const Hero = () => {
         /> */}
         {/* <Ionicons name="md-checkmark-circle" size={32} color="green" /> */}
         <Text style={{ color: TEXT_COLOR, textAlign: "center", marginTop: 5 }}>
-          Meine Notizen
+          {t("my_notes")}
         </Text>
       </View>
       <View style={{ alignContent: "center", marginLeft: 12, width: 70 }}>
@@ -143,7 +146,7 @@ const Hero = () => {
             color: TEXT_COLOR,
           }}
         >
-          Premium
+          {t("premium")}
         </Text>
       </View>
     </View>
