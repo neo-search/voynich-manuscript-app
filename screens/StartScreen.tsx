@@ -8,6 +8,7 @@ import Hero from "../components/Hero";
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
 import "../translations/i18n";
+import { QuireList } from "../components/QuireList";
 
 // import { Props } from "../types";
 const IMAGE_URI =
@@ -37,10 +38,10 @@ export default function StartScreen({ navigation }: any) {
               {t("read_manuscript")}
             </Text>
           </ViewWithMargin>
-          <ThumbnailSlider
+          <QuireList
             pages={pages}
             navigation={navigation}
-          ></ThumbnailSlider>
+          ></QuireList>
           <ViewWithMargin>
             <View
               style={styles.separator}
@@ -49,11 +50,6 @@ export default function StartScreen({ navigation }: any) {
             />
             <Text style={styles.title}>{t("page_navigation")}</Text>
           </ViewWithMargin>
-          <ThumbnailSlider
-            pages={pages}
-            navigation={navigation}
-          ></ThumbnailSlider>
-
           <ViewWithMargin>
             <View
               style={styles.separator}

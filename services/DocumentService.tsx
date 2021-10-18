@@ -10,6 +10,18 @@ export class DocumentService {
       pages[i] = this.page(i);
     }
 
+    pages[0].quire = 1;
+    pages[0].quireColumn = 0;
+    pages[0].quireRow = 0;
+
+    pages[1].quire = 1;
+    pages[1].quireColumn = 0;
+    pages[1].quireRow = 1;
+
+    pages[2].quire = 1;
+    pages[2].quireColumn = 1;
+    pages[2].quireRow = 1;
+
     return {
       title: "Voynich manuscript",
       amountOfPages: 122,
@@ -30,6 +42,8 @@ export class DocumentService {
       pageTitle: "f" + (index + 1) + "v",
       pagePosition: "Folie " + index + ", rechte Seite (F20 V)",
       quire: 3,
+      quireColumn: 1,
+      quireRow: 1,
       chapter: "Pflanzen",
       transliteration: `DSFDA DSFASD DFASFA DF
         DFSFDAS
@@ -53,6 +67,8 @@ export type PageProps = {
   pageTitle: string;
   pagePosition: string;
   quire: number;
+  quireColumn: number;
+  quireRow: number;
   chapter: string;
   transliteration: string;
   stats: PageStatProps;
