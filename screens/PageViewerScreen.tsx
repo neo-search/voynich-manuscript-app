@@ -28,11 +28,11 @@ function _render(item: any) {
       >
         <Image
           source={{
-            uri: item.item.imageUrl
+            uri: item.item.imageUrl,
           }}
           style={{
             width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height
+            height: Dimensions.get("window").height,
           }}
         ></Image>
       </ImageZoom>
@@ -50,8 +50,11 @@ function _render(item: any) {
 export default function PageViewerScreen({ route }: { route: any }) {
   const pages = route.params.pages;
   const index = route.params.index;
+  console.log("index: " + index);
   const item = pages[index];
   const documentService = new DocumentService();
+  const imageWidth = Dimensions.get("window").width
+  const imageHeight =  Dimensions.get("window").height
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,6 +66,18 @@ export default function PageViewerScreen({ route }: { route: any }) {
         keyExtractor={(item) => item.pagePosition}
         horizontal={true}
         decelerationRate={"normal"}
+        initialScrollIndex={index}
+        getItemLayout={(data, index) => ({
+          length: imageHeight,
+          offset: imageWidth * index,
+          index: index
+        })}
+        // onScrollToIndexFailed={info => {
+        //   const wait = new Promise(resolve => setTimeout(resolve, 500));
+        //   wait.then(() => {
+        //     flatList.current?.scrollToIndex({ index: info.index, animated: true });
+        //   });
+        // }}
         // disableIntervalMomentum={true}
         // getItemLayout={(data, index) => ({
         //   length: 100,
