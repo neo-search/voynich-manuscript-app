@@ -8,7 +8,7 @@ import { View, Text, Pressable } from "react-native";
 export function PageThumbnail({
   pages,
   index,
-  navigation,
+  navigation
 }: {
   pages: Array<PageProps>;
   index: number;

@@ -1,14 +1,25 @@
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
 import { PageProps } from "../services/DocumentService";
-import { PageThumbnail } from "./PageThumbnail";
 import { QuireView } from "./QuireView";
 
 const renderItem = (
   pages: Array<PageProps>,
-  index: number,
+  quire: number,
+  pagesQuire: Array<Number>,
   navigation: any
-) => <PageThumbnail pages={pages} index={index} navigation={navigation} />;
+) => {
+  return (<QuireView pages={pages} pagesQuire={pagesQuire} navigation={navigation} quire={quire} />)
+}
+
+const groupByQuire = function(pages: Array<PageProps>) {
+  return pages.reduce(function(quireMap : any, page) {
+    const quire = page.quire;
+    quireMap[quire] = quireMap[quire] || [];
+    quireMap[quire].push(pages.indexOf(page));
+    return quireMap;
+  }, {})
+}
 
 export function QuireList({
   pages,
@@ -17,20 +28,35 @@ export function QuireList({
   pages: Array<PageProps>;
   navigation: any;
 }) {
-  const quires = Array.from(new Set(pages.map((p) => p.quire))).sort();
-  // var pagesQuire = groupBy(pages, (page) => page.quire);
+  const pagesByQuire = groupByQuire(pages);
   return (
     <View>
-      {quires.map((quire) => {
+      <FlatList<string>
+        style={{ margin: 0, padding: 0 }}
+        pagingEnabled={false}
+        data={Object.keys(pagesByQuire).sort()}
+        renderItem={(quire) => renderItem(pages, Number(quire.item), pagesByQuire[quire.item], navigation)}
+        keyExtractor={(item) => item}
+        horizontal={false}
+        decelerationRate={"normal"}
+        getItemLayout={(data, index) => ({
+          length: 100,
+          offset: 100 * index,
+          index,
+        })}
+      />
+      {/* {quires.map((quire) => {
         var pagesQuire = pages.filter((p) => p.quire == quire);
         return (
           <QuireView
-            pages={pagesQuire}
+            key={quire}
+            pages={pages}
+            pagesQuire={pagesQuire}
             navigation={{ navigation }}
             quire={quire}
           ></QuireView>
         );
-      })}
+      })} */}
     </View>
   );
 }

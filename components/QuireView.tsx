@@ -2,36 +2,66 @@ import * as React from "react";
 import { FlatList, ListRenderItemInfo, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PageProps } from "../services/DocumentService";
-import { PageThumbnail } from "./PageThumbnail";
 import { QuireRow } from "./QuireRow";
 
 const renderItem = (
   pages: Array<PageProps>,
   index: number,
+  pagesQuireRow: Array<number>,
   navigation: any
-) => <PageThumbnail pages={pages} index={index} navigation={navigation} />;
+) => <QuireRow pages={pages} index={index} pagesRow={pagesQuireRow} navigation={navigation} />;
+
+const groupByQuireRow = function (pages: Array<PageProps>, pagesRow: Array<PageProps>) {
+  return pagesRow.reduce(function (quireRowMap: any, page) {
+    const quireRow = page.quireRow;
+    quireRowMap[quireRow] = quireRowMap[quireRow] || [];
+    quireRowMap[quireRow].push(pages.indexOf(page));
+    return quireRowMap;
+  }, {});
+};
 
 export function QuireView({
   pages,
+  pagesQuire,
   quire,
   navigation,
 }: {
   pages: Array<PageProps>;
+  pagesQuire: Array<Number>;
   navigation: any;
   quire: number;
 }) {
-  const rows = Array.from(new Set(pages.map((p) => p.quireRow))).sort();
+  const quireRowMap = groupByQuireRow(pages, 
+    pagesQuire.map((p) => pages[p.valueOf()])
+  );
   return (
     <View>
-      <View>
-        <Text>Quire: {quire}</Text>
-        {rows.map((row) => {
-          var pagesRow = pages.filter((p) => p.quireRow == row);
-          return (
-            <QuireRow pages={pagesRow} navigation={{ navigation }}></QuireRow>
-          );
+      <Text>Quire: {Number(quire)}</Text>
+      <FlatList<string>
+        style={{ margin: 0, padding: 0 }}
+        pagingEnabled={false}
+        data={Object.keys(quireRowMap).sort()}
+        renderItem={(quireRow) => renderItem(pages, Number(quireRow.item), quireRowMap[quireRow.item], navigation)}
+        keyExtractor={(item) => item}
+        horizontal={false}
+        decelerationRate={"normal"}
+        getItemLayout={(data, index) => ({
+          length: 100,
+          offset: 100 * index,
+          index,
         })}
-      </View>
+      />
+      {/* {rows.map((row) => {
+        var pagesRow = pagesQuire.filter((p) => p.quireRow == row);
+        return (
+          <QuireRow
+            key={row}
+            pages={pages}
+            pagesRow={pagesRow}
+            navigation={{ navigation }}
+          ></QuireRow>
+        );
+      })} */}
     </View>
   );
 }

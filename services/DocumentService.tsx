@@ -22,6 +22,18 @@ export class DocumentService {
     pages[2].quireColumn = 1;
     pages[2].quireRow = 1;
 
+    pages[3].quire = 2;
+    pages[3].quireColumn = 0;
+    pages[3].quireRow = 0;
+
+    pages[4].quire = 2;
+    pages[4].quireColumn = 1;
+    pages[4].quireRow = 0;
+
+    pages[5].quire = 2;
+    pages[5].quireColumn = 2;
+    pages[5].quireRow = 0;
+
     return {
       title: "Voynich manuscript",
       amountOfPages: 122,
