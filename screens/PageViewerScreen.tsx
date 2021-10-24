@@ -68,7 +68,7 @@ export default function PageViewerScreen({ route }: { route: any }) {
         decelerationRate={"normal"}
         initialScrollIndex={index}
         getItemLayout={(data, index) => ({
-          length: imageHeight,
+          length: imageWidth,
           offset: imageWidth * index,
           index: index
         })}

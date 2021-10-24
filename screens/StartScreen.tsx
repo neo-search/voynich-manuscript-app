@@ -1,23 +1,35 @@
-import * as React from "react";
-import { StyleSheet, ScrollView, StatusBar } from "react-native";
-import { Image } from "react-native-elements";
-import { Text, View, ViewWithMargin, SafeAreaView } from "../components/Themed";
-import { DocumentService } from "../services/DocumentService";
-import { ThumbnailSlider } from "../components/ThumbnailSlider";
-import Hero from "../components/Hero";
 import { LinearGradient } from "expo-linear-gradient";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "../translations/i18n";
+import { ScrollView, StatusBar, StyleSheet, Button } from "react-native";
+import Hero from "../components/Hero";
 import { QuireList } from "../components/QuireList";
+import { SafeAreaView, Text, View, ViewWithMargin } from "../components/Themed";
+import { ThumbnailSlider } from "../components/ThumbnailSlider";
+import { DocumentService, Document } from "../services/DocumentService";
+import "../translations/i18n";
 
 // import { Props } from "../types";
 const IMAGE_URI =
   "https://upload.wikimedia.org/wikipedia/commons/e/e7/Voynich_Manuscript_%28119%29.jpg";
 
 export default function StartScreen({ navigation }: any) {
+  const [manuscript, setManuscript] = useState<Document>();
+  useEffect(() => {
+    const fetchManuscript = async () => {
+      const result = await documentService.manuscript();
+      setManuscript(result);
+    };
+    fetchManuscript();
+  }, []);
+
   const documentService = new DocumentService();
   const { t } = useTranslation();
-  const pages = documentService.document().pages;
+  const pages = manuscript?.pages;
+  // const pages = documentService.document().pages;
+  // const [color, setColor] = useState(null);
+  // const array = useState(false);
+  console.log("render");
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar translucent backgroundColor="transparent" />
@@ -38,10 +50,7 @@ export default function StartScreen({ navigation }: any) {
               {t("read_manuscript")}
             </Text>
           </ViewWithMargin>
-          <QuireList
-            pages={pages}
-            navigation={navigation}
-          ></QuireList>
+          <QuireList pages={pages} navigation={navigation}></QuireList>
           <ViewWithMargin>
             <View
               style={styles.separator}
@@ -58,10 +67,6 @@ export default function StartScreen({ navigation }: any) {
             />
             <Text style={styles.title}>{t("show_folding")}</Text>
           </ViewWithMargin>
-          <ThumbnailSlider
-            pages={pages}
-            navigation={navigation}
-          ></ThumbnailSlider>
         </ScrollView>
       </LinearGradient>
       {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}

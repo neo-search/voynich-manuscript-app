@@ -1,8 +1,20 @@
+import * as jsyaml from "js-yaml";
+import axios from "axios";
+
 export class DocumentService {
   ENDPOINT =
     "https://ia902608.us.archive.org/BookReader/BookReaderImages.php?zip=/18/items/TheVoynichManuscript/Voynich_Manuscript_jp2.zip&file=Voynich_Manuscript_jp2";
 
+  ENDPOINT_YAML = "https://voynich-app.s3.eu-central-1.amazonaws.com/all.yaml";
   constructor() {}
+
+  async manuscript(): Promise<Document> {
+    const axiosRes = await axios.get(this.ENDPOINT_YAML);
+    const doc = await axiosRes.data;
+    const manuscript = jsyaml.load(String(doc)) as Document;
+    console.log("Manuskript heruntergeladen")
+    return manuscript;
+  }
 
   document() {
     const pages = [];
@@ -49,6 +61,7 @@ export class DocumentService {
   page(index: number): PageProps {
     const num = this.zeroPad(index);
     return {
+      name: "testname",
       imageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
       quireImageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
       pageTitle: "f" + (index + 1) + "v",
@@ -60,11 +73,7 @@ export class DocumentService {
       transliteration: `DSFDA DSFASD DFASFA DF
         DFSFDAS
         DDFA DFADS DFAD`,
-      stats: {
-        amountOfChars: 120,
-        amountOfWords: 12,
-        charDistribution: { a: 12, b: 30, c: 1, d: 43 },
-      },
+      stats: {lines:3, paragraphs: 1, illustrations: false},
     };
   }
 
@@ -74,6 +83,7 @@ export class DocumentService {
 }
 
 export type PageProps = {
+  name: string;
   imageUrl: string;
   quireImageUrl: string;
   pageTitle: string;
@@ -87,11 +97,17 @@ export type PageProps = {
 };
 
 export type PageStatProps = {
-  amountOfChars: number;
-  amountOfWords: number;
-  charDistribution: CharDistribution;
+  lines: number;
+  paragraphs: number;
+  illustrations: boolean;
 };
 
 export type CharDistribution = {
   [key: string]: number;
+};
+
+export type Document = {
+  name: string;
+  amountOfPages: number;
+  pages: Array<PageProps>;
 };
