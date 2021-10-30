@@ -12,7 +12,7 @@ export class DocumentService {
     const axiosRes = await axios.get(this.ENDPOINT_YAML);
     const doc = await axiosRes.data;
     const manuscript = jsyaml.load(String(doc)) as Document;
-    console.log("Manuskript heruntergeladen")
+    console.log("Manuskript heruntergeladen");
     return manuscript;
   }
 
@@ -58,24 +58,30 @@ export class DocumentService {
     };
   }
 
-  page(index: number): PageProps {
-    const num = this.zeroPad(index);
-    return {
-      name: "testname",
-      image:{fullsize: "", thumb: "", width: 1, height: 1},
-      quireImageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
-      pageTitle: "f" + (index + 1) + "v",
-      pagePosition: "Folie " + index + ", rechte Seite (F20 V)",
-      quire: 3,
-      quirecolumn: 1,
-      quirerow: 1,
-      chapter: "Pflanzen",
-      transliteration: `DSFDA DSFASD DFASFA DF
-        DFSFDAS
-        DDFA DFADS DFAD`,
-      stats: {lines:3, paragraphs: 1, illustrations: false},
-    };
-  }
+  // page(index: number): PageProps {
+  //   const num = this.zeroPad(index);
+  //   return {
+  //     name: "testname",
+  //     image: { fullsize: "", thumb: "", width: 1, height: 1 },
+  //     quireImageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
+  //     pageTitle: "f" + (index + 1) + "v",
+  //     pagePosition: "Folie " + index + ", rechte Seite (F20 V)",
+  //     quire: 3,
+  //     quirecolumn: 1,
+  //     quirerow: 1,
+  //     chapter: "Pflanzen",
+  //     transliteration: `DSFDA DSFASD DFASFA DF
+  //       DFSFDAS
+  //       DDFA DFADS DFAD`,
+  //     stats: { lines: 3, paragraphs: 1, illustrations: false },
+  //     description: {
+  //       generalDescription:{
+  //         author:""
+
+  //       }
+  //     }
+  //   };
+  // }
 
   zeroPad(num: number) {
     return String(num).padStart(4, "0");
@@ -84,7 +90,7 @@ export class DocumentService {
 
 export type PageProps = {
   name: string;
-  image: {fullsize: string, thumb: string, width: number, height: number};
+  image: { fullsize: string; thumb: string; width: number; height: number };
   quireImageUrl: string;
   pageTitle: string;
   pagePosition: string;
@@ -92,8 +98,32 @@ export type PageProps = {
   quirecolumn: number;
   quirerow: number;
   chapter: string;
-  transliteration: string;
+  interlinearTranscription: TranslitrationProps;
   stats: PageStatProps;
+  description: PageDescriptionsProps;
+};
+
+export type TranslitrationProps = {
+  author: string;
+  alphabet: string;
+  date: string;
+  url: string;
+  transcription: string[];
+};
+
+export type PageDescriptionsProps = {
+  generalDescription: PageDescriptionProps;
+  illustrations: PageDescriptionProps;
+  text: PageDescriptionProps;
+  otherInformation: PageDescriptionProps;
+};
+
+export type PageDescriptionProps = {
+  author: string;
+  url: string;
+  translation: string;
+  en: string;
+  de: string;
 };
 
 export type PageStatProps = {

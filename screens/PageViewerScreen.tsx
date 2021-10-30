@@ -4,21 +4,41 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Text,
   ListRenderItemInfo,
   FlatList,
 } from "react-native";
-import { Image } from "react-native-elements";
+import { Image, Text } from "react-native-elements";
 import ImageZoom from "react-native-image-pan-zoom";
 import { SafeAreaView } from "../components/Themed";
 import { DocumentService, PageProps } from "../services/DocumentService";
+import HTMLView from "react-native-htmlview";
 
 function _render(item: ListRenderItemInfo<PageProps>) {
-  const imageRatio = item.item.image.height / item.item.image.width;
+  const page = item.item;
+  const imageRatio = page.image.height / page.image.width;
   const imageHeight =
     imageRatio > 0 ? Dimensions.get("window").width * imageRatio : 100;
+  const generalDescription =
+    page.description &&
+    page.description.generalDescription &&
+    page.description.generalDescription.en;
+  console.log("age.description.", generalDescription);
+
+  const illustrationDescription =
+    page.description &&
+    page.description.illustrations &&
+    page.description.illustrations.en;
+
+  const textDescription =
+    page.description && page.description.text && page.description.text.en;
+
+  const otherInformation =
+    page.description &&
+    page.description.otherInformation &&
+    page.description.otherInformation.en;
+
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "black" }}>
       <ImageZoom
         useNativeDriver={true}
         cropWidth={Dimensions.get("window").width}
@@ -28,7 +48,7 @@ function _render(item: ListRenderItemInfo<PageProps>) {
       >
         <Image
           source={{
-            uri: item.item.image.fullsize,
+            uri: page.image.fullsize,
           }}
           style={{
             width: Dimensions.get("window").width,
@@ -38,13 +58,76 @@ function _render(item: ListRenderItemInfo<PageProps>) {
           }}
         ></Image>
       </ImageZoom>
-      <View style={{ borderWidth: 0, margin: 0, padding: 0 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>f20v</Text>
-        <Text style={{ fontSize: 16 }}>Transliterations</Text>
+      <View
+        style={{
+          borderWidth: 10,
+          margin: 0,
+          // padding: 12,
+          width: Dimensions.get("window").width,
+          borderRadius: 12,
+          borderColor: "white",
+          backgroundColor: "white",
+          // bord
+          // border
+        }}
+      >
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>{page.name}</Text>
+        {/* <Text style={{ fontSize: 16 }}>Transliterations</Text> */}
 
-        <Text>DSGA DSFAGS ES DFA AADS SADG GPHS </Text>
-        <Text>B</Text>
-        <Text>C</Text>
+        {/* <View style={{ width: 200, backgroundColor: "blue" }}> */}
+        {generalDescription ? (
+          <>
+            <Text style={{ fontWeight: "bold" }}>General Information</Text>
+            <HTMLView
+              // style={{ window: Dimensions.get("window").width }}
+              value={generalDescription}
+            ></HTMLView>
+          </>
+        ) : (
+          <></>
+        )}
+
+        {/* <View style={{ width: 200, backgroundColor: "blue" }}> */}
+        {illustrationDescription ? (
+          <>
+            <Text style={{ fontWeight: "bold" }}>Illustration</Text>
+            <HTMLView
+              // style={{ window: Dimensions.get("window").width }}
+              value={illustrationDescription}
+            ></HTMLView>
+          </>
+        ) : (
+          <></>
+        )}
+        {/* <View style={{ width: 200, backgroundColor: "blue" }}> */}
+        {textDescription ? (
+          <>
+            <Text style={{ fontWeight: "bold" }}>Text</Text>
+            <HTMLView
+              // style={{ window: Dimensions.get("window").width }}
+              value={textDescription}
+            ></HTMLView>
+          </>
+        ) : (
+          <></>
+        )}
+        {/* <View style={{ width: 200, backgroundColor: "blue" }}> */}
+        {otherInformation ? (
+          <>
+            <Text style={{ fontWeight: "bold" }}>Other Information</Text>
+            <HTMLView
+              // style={{ window: Dimensions.get("window").width }}
+              value={otherInformation}
+            ></HTMLView>
+          </>
+        ) : (
+          <></>
+        )}
+        <Text style={{ fontWeight: "bold" }}>Transcription</Text>
+        {page.interlinearTranscription &&
+          page.interlinearTranscription.transcription.map((e) => (
+            <Text>{e}</Text>
+          ))}
       </View>
     </ScrollView>
   );
