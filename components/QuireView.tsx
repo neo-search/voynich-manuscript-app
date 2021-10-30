@@ -13,7 +13,7 @@ const renderItem = (
 
 const groupByQuireRow = function (pages: Array<PageProps>, pagesRow: Array<PageProps>) {
   return pagesRow.reduce(function (quireRowMap: any, page) {
-    const quireRow = page.quireRow;
+    const quireRow = page.quirerow;
     quireRowMap[quireRow] = quireRowMap[quireRow] || [];
     quireRowMap[quireRow].push(pages.indexOf(page));
     return quireRowMap;

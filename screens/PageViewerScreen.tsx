@@ -13,26 +13,28 @@ import ImageZoom from "react-native-image-pan-zoom";
 import { SafeAreaView } from "../components/Themed";
 import { DocumentService, PageProps } from "../services/DocumentService";
 
-const IMAGE_URI =
-  "https://upload.wikimedia.org/wikipedia/commons/e/e7/Voynich_Manuscript_%28119%29.jpg";
-
-function _render(item: any) {
+function _render(item: ListRenderItemInfo<PageProps>) {
+  const imageRatio = item.item.image.height / item.item.image.width;
+  const imageHeight =
+    imageRatio > 0 ? Dimensions.get("window").width * imageRatio : 100;
   return (
     <ScrollView>
       <ImageZoom
         useNativeDriver={true}
         cropWidth={Dimensions.get("window").width}
-        cropHeight={Dimensions.get("window").height}
+        cropHeight={imageHeight}
         imageWidth={Dimensions.get("window").width}
-        imageHeight={Dimensions.get("window").height}
+        imageHeight={imageHeight}
       >
         <Image
           source={{
-            uri: item.item.imageUrl,
+            uri: item.item.image.fullsize,
           }}
           style={{
             width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
+            height: imageHeight,
+            //   // width: '100%',
+            //   // height: 1
           }}
         ></Image>
       </ImageZoom>
@@ -50,11 +52,10 @@ function _render(item: any) {
 export default function PageViewerScreen({ route }: { route: any }) {
   const pages = route.params.pages;
   const index = route.params.index;
-  console.log("index: " + index);
   const item = pages[index];
   const documentService = new DocumentService();
-  const imageWidth = Dimensions.get("window").width
-  const imageHeight =  Dimensions.get("window").height
+  const imageWidth = Dimensions.get("window").width;
+  const imageHeight = Dimensions.get("window").height;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,15 +64,15 @@ export default function PageViewerScreen({ route }: { route: any }) {
         pagingEnabled={true}
         data={pages}
         renderItem={(item) => _render(item)}
-        keyExtractor={(item) => item.pagePosition}
+        keyExtractor={(item) => item.name}
         horizontal={true}
         decelerationRate={"normal"}
-        initialScrollIndex={index}
-        getItemLayout={(data, index) => ({
-          length: imageWidth,
-          offset: imageWidth * index,
-          index: index
-        })}
+        // initialScrollIndex={index}
+        // getItemLayout={(data, index) => ({
+        //   length: imageWidth,
+        //   offset: imageWidth * index,
+        //   index: index,
+        // })}
         // onScrollToIndexFailed={info => {
         //   const wait = new Promise(resolve => setTimeout(resolve, 500));
         //   wait.then(() => {
@@ -92,7 +93,7 @@ export default function PageViewerScreen({ route }: { route: any }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     // alignItems: "center",
     // justifyContent: "flex-start",
   },

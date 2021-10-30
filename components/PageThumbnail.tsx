@@ -14,6 +14,8 @@ export function PageThumbnail({
   index: number;
   navigation: any;
 }) {
+  console.log("index: " + index)
+  console.log(pages[index])
   return (
     <View
       style={{
@@ -36,7 +38,7 @@ export function PageThumbnail({
         >
           <Image
             style={{ width: 100, height: 120 }}
-            source={{ uri: pages[index].imageUrl }}
+            source={{ uri: pages[index].image.thumb }}
           ></Image>
         </Pressable>
       </View>

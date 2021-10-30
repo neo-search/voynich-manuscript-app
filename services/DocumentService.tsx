@@ -23,28 +23,28 @@ export class DocumentService {
     }
 
     pages[0].quire = 1;
-    pages[0].quireColumn = 0;
-    pages[0].quireRow = 0;
+    pages[0].quirecolumn = 0;
+    pages[0].quirerow = 0;
 
     pages[1].quire = 1;
-    pages[1].quireColumn = 0;
-    pages[1].quireRow = 1;
+    pages[1].quirecolumn = 0;
+    pages[1].quirerow = 1;
 
     pages[2].quire = 1;
-    pages[2].quireColumn = 1;
-    pages[2].quireRow = 1;
+    pages[2].quirecolumn = 1;
+    pages[2].quirerow = 1;
 
     pages[3].quire = 2;
-    pages[3].quireColumn = 0;
-    pages[3].quireRow = 0;
+    pages[3].quirecolumn = 0;
+    pages[3].quirerow = 0;
 
     pages[4].quire = 2;
-    pages[4].quireColumn = 1;
-    pages[4].quireRow = 0;
+    pages[4].quirecolumn = 1;
+    pages[4].quirerow = 0;
 
     pages[5].quire = 2;
-    pages[5].quireColumn = 2;
-    pages[5].quireRow = 0;
+    pages[5].quirecolumn = 2;
+    pages[5].quirerow = 0;
 
     return {
       title: "Voynich manuscript",
@@ -62,13 +62,13 @@ export class DocumentService {
     const num = this.zeroPad(index);
     return {
       name: "testname",
-      imageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
+      image:{fullsize: "", thumb: "", width: 1, height: 1},
       quireImageUrl: `${this.ENDPOINT}/Voynich_Manuscript_${num}.jp2&id=TheVoynichManuscript&scale=2&rotate=0}`,
       pageTitle: "f" + (index + 1) + "v",
       pagePosition: "Folie " + index + ", rechte Seite (F20 V)",
       quire: 3,
-      quireColumn: 1,
-      quireRow: 1,
+      quirecolumn: 1,
+      quirerow: 1,
       chapter: "Pflanzen",
       transliteration: `DSFDA DSFASD DFASFA DF
         DFSFDAS
@@ -84,13 +84,13 @@ export class DocumentService {
 
 export type PageProps = {
   name: string;
-  imageUrl: string;
+  image: {fullsize: string, thumb: string, width: number, height: number};
   quireImageUrl: string;
   pageTitle: string;
   pagePosition: string;
   quire: number;
-  quireColumn: number;
-  quireRow: number;
+  quirecolumn: number;
+  quirerow: number;
   chapter: string;
   transliteration: string;
   stats: PageStatProps;
