@@ -40,7 +40,9 @@ function _render(item: ListRenderItemInfo<PageProps>) {
   return (
     <ScrollView style={{ backgroundColor: "black" }}>
       <ImageZoom
-        useNativeDriver={true}
+        maxScale={10}
+        minScale={1}
+        // useNativeDriver={true}
         cropWidth={Dimensions.get("window").width}
         cropHeight={imageHeight}
         imageWidth={Dimensions.get("window").width}
